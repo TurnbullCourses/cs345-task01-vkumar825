@@ -24,13 +24,13 @@ class BankAccountTest {
 
     @Test
     void isEmailValidTest(){
-        assertTrue(BankAccount.isEmailValid( "a@b.com"));
-        assertFalse( BankAccount.isEmailValid(""));
-        assertFalse(BankAccount.isEmailValid("abc-@mail.com"));
-        assertFalse(BankAccount.isEmailValid("abc#def@mail.com"));
-        assertTrue(BankAccount.isEmailValid("abc.def@mail.com"));
-        assertFalse(BankAccount.isEmailValid(".abc@mail.com"));
-        assertFalse(BankAccount.isEmailValid("def.abc@mail.c"));
+        assertTrue(BankAccount.isEmailValid( "a@b.com")); //correct format, not a border case
+        assertFalse( BankAccount.isEmailValid(""));//border case, no characters present
+        assertFalse(BankAccount.isEmailValid("abc-@mail.com"));//a dash must be followed by a letter, not a border case
+        assertFalse(BankAccount.isEmailValid("abc#def@mail.com"));//hashtags are not allowed, not a border case
+        assertTrue(BankAccount.isEmailValid("abc.def@mail.com"));//a dot is followed by a latter, not a border case
+        assertFalse(BankAccount.isEmailValid(".abc@mail.com"));//dot can't be used at the beginning, border case
+        assertFalse(BankAccount.isEmailValid("def.abc@mail.c"));//dot in the domain must not be the last or second last character, border case
 
     }
 
