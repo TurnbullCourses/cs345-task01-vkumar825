@@ -26,6 +26,7 @@ class BankAccountTest {
 
         BankAccount bankAccount3 = new BankAccount("a2@b.com", 300);
         assertThrows(InsufficientFundsException.class, () -> bankAccount3.withdraw(400));
+    
     }
 
     @Test
