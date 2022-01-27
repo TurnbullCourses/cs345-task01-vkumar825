@@ -32,6 +32,11 @@ class BankAccountTest {
         assertFalse(BankAccount.isEmailValid(".abc@mail.com"));//dot can't be used at the beginning, border case
         assertFalse(BankAccount.isEmailValid("def.abc@mail.c"));//dot in the domain must not be the last or second last character, border case
 
+        assertFalse(BankAccount.isEmailValid("hello@mail")); // no dot for the suffix, right-side border case equivalence class
+        assertFalse(BankAccount.isEmailValid("hello@")); // no suffix, right-side border case equivalence class
+        assertTrue(BankAccount.isEmailValid("he-llo@mail.com")); // email with dash, middle equivalence class
+        assertTrue(BankAccount.isEmailValid("h_e-ll.o@mail.com")); // email with all non-letter or number symbols before @, middle equivalence class
+        
     }
 
     @Test
