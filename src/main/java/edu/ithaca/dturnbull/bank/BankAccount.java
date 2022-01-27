@@ -43,7 +43,10 @@ public class BankAccount {
         if (email.indexOf('@') == -1){
             return false;
         }
+        
+
         int size = email.length();
+        
         boolean flag = true;
         for(int i = 0; i < size; i++){
             if ((email.charAt(i)=='.')||(email.charAt(i)=='-')||(email.charAt(i)=='_')||(email.charAt(i)=='@')){
@@ -61,6 +64,14 @@ public class BankAccount {
         }
         if (email.charAt(size-1)=='.' || email.charAt(size-2)== '.'){
             return false;
+        }
+        for(int i = email.indexOf('@'); i < size; i++){
+            if(email.charAt(i)=='.'){
+                break;
+            }
+            else if(i == (size-1)){
+                return false;
+            }
         }
         return true;
 
