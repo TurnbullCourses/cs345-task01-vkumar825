@@ -8,7 +8,7 @@ public class BankAccount {
     /**
      * @throws IllegalArgumentException if email is invalid
      */
-    public BankAccount(String email, double startingBalance){
+    public BankAccount(String email, double startingBalance) throws IllegalArgumentException{
         if (isEmailValid(email)){
             this.email = email;
             this.balance = startingBalance;
@@ -30,7 +30,10 @@ public class BankAccount {
      * @post reduces the balance by amount if amount is non-negative and smaller than balance
      * @post throw an exception if the amount is negative, or greater than the balance
      */
-    public void withdraw (double amount) throws InsufficientFundsException{
+    public void withdraw (double amount) throws InsufficientFundsException, IllegalArgumentException{
+        if(amount < 0){
+            throw new IllegalArgumentException("amount can't be negative");
+        }
         if (amount <= balance){
             balance -= amount;
         }
