@@ -9,14 +9,7 @@ class BankAccountTest {
     @Test
     void getBalanceTest() throws IllegalArgumentException {
         BankAccount bankAccount = new BankAccount("a@b.com", 200);
-
         assertEquals(200, bankAccount.getBalance(), 0.001);
-
-        BankAccount bankAccount2 = new BankAccount("a@b.com", -200);
-        assertEquals(-200, bankAccount2.getBalance(), 0.001);
-
-        BankAccount bankAccount3 = new BankAccount("a@b.com", 0);
-        assertEquals(0, bankAccount3.getBalance(), 0.001);
     }
 
     @Test
@@ -27,16 +20,13 @@ class BankAccountTest {
         assertEquals(100, bankAccount.getBalance(), 0.001);
         assertThrows(InsufficientFundsException.class, () -> bankAccount.withdraw(300));
 
-        BankAccount bankAccount2 = new BankAccount("a2@b.com", -200);
-        assertThrows(InsufficientFundsException.class, () -> bankAccount2.withdraw(50));
+        BankAccount bankAccount2 = new BankAccount("a2@b.com", 300);
+        assertThrows(InsufficientFundsException.class, () -> bankAccount2.withdraw(400));
 
-        BankAccount bankAccount3 = new BankAccount("a2@b.com", 300);
-        assertThrows(InsufficientFundsException.class, () -> bankAccount3.withdraw(400));
+        assertThrows(IllegalArgumentException.class, () -> bankAccount2.withdraw(-100));
 
-        assertThrows(IllegalArgumentException.class, () -> bankAccount3.withdraw(-100));
-
-        assertThrows(IllegalArgumentException.class, () -> bankAccount3.withdraw(100.567));
-        assertThrows(IllegalArgumentException.class, () -> bankAccount3.withdraw(-100.56));
+        assertThrows(IllegalArgumentException.class, () -> bankAccount2.withdraw(100.567));
+        assertThrows(IllegalArgumentException.class, () -> bankAccount2.withdraw(-100.56));
     
     }
 
@@ -85,7 +75,7 @@ class BankAccountTest {
         assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", 100));
 
         assertThrows(IllegalArgumentException.class, ()-> new BankAccount("a@b.com", 48.208));
-        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("a@b.com", -18.20));
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("a@b.com", -18.208));
     }
 
 }
