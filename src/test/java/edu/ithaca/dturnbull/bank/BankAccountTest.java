@@ -37,6 +37,24 @@ class BankAccountTest {
     
     }
 
+    @Test 
+    void isAmountValidTest(){
+        // Cases where numbers are positive but have more than two decimal places
+        assertFalse(BankAccount.isAmountValid(0.001));
+        assertFalse(BankAccount.isAmountValid(345.7648));
+
+        // Cases where amount is positive and has less than or equal to two decimal places
+        assertTrue(BankAccount.isAmountValid(59.99));
+        assertTrue(BankAccount.isAmountValid(129.52));
+
+        // Cases where amount is negative
+        assertFalse(BankAccount.isAmountValid(-3.99));
+        assertFalse(BankAccount.isAmountValid(-100.456));
+
+        // Case where withdraw amount is zero
+        assertFalse(BankAccount.isAmountValid(0.00));
+    }
+
     @Test
     void isEmailValidTest(){
         assertTrue(BankAccount.isEmailValid( "a@b.com")); //correct format, not a border case

@@ -42,6 +42,14 @@ public class BankAccount {
         }
     }
 
+    /**
+     * @param amount amount in bank account balance
+     * @return true if amount is non-negative and has two decimal places or less, or false otherwise
+     */
+    public static boolean isAmountValid(double amount){
+        return false;
+    }
+
 
     public static boolean isEmailValid(String email){
         if (email.indexOf('@') == -1){
