@@ -47,7 +47,17 @@ public class BankAccount {
      * @return true if amount is non-negative and has two decimal places or less, or false otherwise
      */
     public static boolean isAmountValid(double amount){
-        return false;
+        if (amount <= 0){
+            return false;
+        }
+
+        String amountStr = Double.toString(amount);
+        if (amountStr.substring(amountStr.indexOf('.'), amountStr.length() - 1).length() > 2){
+            return false;
+        }
+        else{
+            return true;
+        }
     }
 
 
