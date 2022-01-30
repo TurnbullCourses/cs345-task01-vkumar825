@@ -31,6 +31,34 @@ public class BankAccount {
     }
 
     /**
+     * @param amount amount to deposit in the bank account
+     * @throws IllegalArgumentException if amount is negative
+     */
+    public void deposit(double amount) throws IllegalArgumentException{
+        if (!isAmountValid(amount)){
+            throw new IllegalArgumentException("Cannot deposit negative amount.");
+        }
+        else{
+            balance += amount;
+        }
+    }
+
+    /**
+     * @post deposit amount from one bank account to another bank account
+     * @throws IllegalArgumentException if amount is negative or has more than 2 decimal places
+     * @throws InsufficientFundsException if transferring more than what you have in your balance
+     */
+    public void transfer(BankAccount account, double amount) throws IllegalArgumentException, InsufficientFundsException{
+        if (!isAmountValid(amount)){
+            throw new IllegalArgumentException("Invalid amount transfer.");
+        }
+        else{
+            withdraw(amount);
+            account.deposit(amount);
+        }
+    }
+
+    /**
      * @post reduces the balance by amount if amount is non-negative and smaller than balance
      * @post throw an exception if the amount is negative, or greater than the balance
      */
@@ -52,7 +80,7 @@ public class BankAccount {
      * @return true if amount is non-negative and has two decimal places or less, or false otherwise
      */
     public static boolean isAmountValid(double amount){
-        if (amount <= 0){
+        if (amount < 0){
             return false;
         }
 
