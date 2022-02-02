@@ -36,7 +36,10 @@ public class BankAccount {
      */
     public void deposit(double amount) throws IllegalArgumentException{
         if (!isAmountValid(amount)){
-            throw new IllegalArgumentException("Cannot deposit negative amount.");
+            throw new IllegalArgumentException("Cannot deposit invalid amount.");
+        }
+        else if (amount == 0){
+            throw new IllegalArgumentException("Cannot deposit zero dollars.");
         }
         else{
             balance += amount;
@@ -65,6 +68,10 @@ public class BankAccount {
     public void withdraw (double amount) throws InsufficientFundsException, IllegalArgumentException{
         if (!isAmountValid(amount)){
             throw new IllegalArgumentException("The amount entered is not valid.");
+        }
+
+        else if (amount == 0){
+            throw new IllegalArgumentException("Cannot withdraw zero dollars.");
         }
 
         if (amount <= balance){

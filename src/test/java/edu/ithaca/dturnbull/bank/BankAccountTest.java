@@ -13,6 +13,13 @@ class BankAccountTest {
 
         BankAccount bankAccount2 = new BankAccount("a@b.com", 0);
         assertEquals(0, bankAccount2.getBalance(), 0.001);
+
+        assertEquals(146.27, new BankAccount("abcd@mail.com", 146.27).getBalance());
+
+        //  Trying to get your balance on an invalid account
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("a.@b2.com", 100).getBalance());
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("foo@b2.com", -156.42).getBalance());
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("a_h@b2.com", 186.423).getBalance());
     }
 
     @Test
@@ -21,15 +28,21 @@ class BankAccountTest {
         bankAccount.withdraw(100);
 
         assertEquals(100, bankAccount.getBalance(), 0.001);
-        assertThrows(InsufficientFundsException.class, () -> bankAccount.withdraw(300));
 
+        // Withdrawing more than what you have in your bankAccount
+        assertThrows(InsufficientFundsException.class, () -> bankAccount.withdraw(300));
         BankAccount bankAccount2 = new BankAccount("a2@b.com", 300);
         assertThrows(InsufficientFundsException.class, () -> bankAccount2.withdraw(400));
 
+        // Withdrawing negative & invalid amount
         assertThrows(IllegalArgumentException.class, () -> bankAccount2.withdraw(-100));
-
         assertThrows(IllegalArgumentException.class, () -> bankAccount2.withdraw(100.567));
         assertThrows(IllegalArgumentException.class, () -> bankAccount2.withdraw(-100.56));
+
+        // Withdrawing zero dollars
+        assertThrows(IllegalArgumentException.class, () -> bankAccount2.withdraw(0));
+
+        
     
     }
 
@@ -38,6 +51,9 @@ class BankAccountTest {
         BankAccount bankAccount = new BankAccount("a@b.com", 200);
         bankAccount.deposit(100);
         assertEquals(300, bankAccount.getBalance());
+
+        // Case where you try to deposit zero dollars
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount.deposit(0));
 
         // Cases where you try to deposit negative amount, and more than 2 decimal places
         assertThrows(IllegalArgumentException.class, ()-> bankAccount.deposit(-100));
@@ -63,6 +79,9 @@ class BankAccountTest {
         bankAccount.transfer(bankAccount2, 50);
         assertEquals(50, bankAccount2.getBalance());
         assertEquals(150, bankAccount.getBalance());
+
+        // Case where you try to transfer zero dollars
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount.transfer(bankAccount2, 0));
 
         // Case where you try to transfer negative amount
         assertThrows(IllegalArgumentException.class, ()-> bankAccount.transfer(bankAccount2, -15));
@@ -123,8 +142,12 @@ class BankAccountTest {
         //check for exception thrown correctly
         assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", 100));
 
-        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("a@b.com", 48.208));
-        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("a@b.com", -18.208));
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("a@bd.com", 48.208));
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("a@be2.com", -18.208));
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("a-@b.com", 19.32));
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount(".-@b.com", 20.478));
+        assertThrows(IllegalArgumentException.class, () -> new BankAccount("abc@gmail.com",-900));
+
     }
 
 }
